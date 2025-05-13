@@ -1,9 +1,6 @@
-<script setup>
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
+<script setup></script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div><router-link to="/">Home</router-link></div>
+  <div><router-link to="/login">login</router-link></div>
 </template>
