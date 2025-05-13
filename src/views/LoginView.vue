@@ -1,3 +1,46 @@
+<script setup>
+import { ref } from 'vue'
+import { useAuth } from '@/composables/useAuth'
+
+// form data
+const formData = ref({
+  email: '',
+  password: '',
+})
+
+// variables
+const isPswShow = ref(false)
+const errMsg = ref('')
+const { token, error, loading, login } = useAuth()
+//
+
+//
+
+/**------- Login -------*/
+
+const handleLogin = async () => {
+  login(formData.value.email, formData.value.password)
+  console.log('token', token.value)
+  console.log('error', error.value)
+  console.log('loading', loading.value)
+}
+
+/**------- Others -------*/
+
+// toggle password visibility
+const togglePswVisibility = () => {
+  isPswShow.value = !isPswShow.value
+}
+
+// testing
+// const testing = (e) => {
+//   console.log('e', e.target.value)
+//   console.log('formData', formData.value)
+// }
+
+// console.log('formData', formData)
+</script>
+
 <template>
   <!-- login -->
   <div class="login bg-gray-50">
@@ -9,38 +52,59 @@
             <img class="w-[120px]" src="../assets/imgs/logo-color.svg" alt="" />
           </div>
           <div class="text-3xl lg:text-4xl text-black font-bold pt-2">Welcome Back</div>
-          <div class="text-3xl lg:text-4xl text-black font-bold pt-2 text-primary">TESTTEST</div>
           <div class="text-gray-light">Welcome back, please enter your details.</div>
+
           <!-- input group -->
-          <div class="input-group pt-3 w-full flex flex-col gap-5">
+          <div class="input-group pt-10 w-full flex flex-col">
             <div class="email">
-              <p class="text-dblack">Email</p>
-              <input class="p-2 w-full border rounded-md bg-transparent" />
+              <v-text-field
+                @input="validateiInput(formData.email)"
+                clearable
+                label="Email"
+                variant="outlined"
+                v-model="formData.email"
+                base-color="isErrLogin ? 'gray' : 'red'"
+              ></v-text-field>
             </div>
-            <div class="password">
-              <p class="text-dblack">password</p>
-              <input class="border p-1 w-full rounded-md" />
+
+            <div class="password relative cursor-pointer">
+              <v-text-field
+                class="cursor-pointer"
+                label="Password"
+                :type="isPswShow ? 'text' : 'password'"
+                variant="outlined"
+                v-model="formData.password"
+              ></v-text-field>
+              <div
+                class="absolute bottom-1/2 -translate-x-1/2 right-2 cursor-pointer"
+                @click="togglePswVisibility()"
+              >
+                <v-icon
+                  :icon="isPswShow ? 'mdi-eye' : 'mdi-eye-off'"
+                  class="cursor-pointer"
+                ></v-icon>
+              </div>
             </div>
           </div>
-          <!-- remember me -->
-          <div class="flex justify-between items-center gap-5">
-            <div class="flex items-center">
-              <input type="checkbox" id="remember" />
-              <label for="remember">Remember me</label>
-            </div>
-            <div>
-              <p>Don't have an account yet?</p>
+          <div class="flex justify-between items-center w-full relative bottom-5 right-2">
+            <!-- remember me -->
+            <div><v-checkbox label="Remember me" color="primary" size="small"></v-checkbox></div>
+            <!-- register -->
+            <!-- <div><p class="underline text-sm">Don't have an account yet?</p></div> -->
+          </div>
+
+          <!-- err msg -->
+          <div class="w-full">
+            <div v-if="errMsg" class="text-red-500 text-sm relative bottom-5 text-start">
+              {{ errMsg }}
             </div>
           </div>
 
           <!-- btn -->
-          <button>
-            <v-btn>Button</v-btn>
-          </button>
-          <!-- other way to login -->
-          <div class="flex items-center gap-5">
-            <div class="border">Google</div>
-            <div class="border">Facebook</div>
+          <div class="w-full">
+            <v-btn variant="tonal" @click="handleLogin()" size="large" class="w-full bg-primary">
+              <p class="cursor-pointer">Login</p>
+            </v-btn>
           </div>
         </div>
       </div>
@@ -73,12 +137,4 @@
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<style></style>
