@@ -9,6 +9,7 @@
             <img class="w-[120px]" src="../assets/imgs/logo-color.svg" alt="" />
           </div>
           <div class="text-3xl lg:text-4xl text-black font-bold pt-2">Welcome Back</div>
+          <div class="text-3xl lg:text-4xl text-black font-bold pt-2 text-primary">TESTTEST</div>
           <div class="text-gray-light">Welcome back, please enter your details.</div>
           <!-- input group -->
           <div class="input-group pt-3 w-full flex flex-col gap-5">
