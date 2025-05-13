@@ -34,7 +34,7 @@
 
           <!-- btn -->
           <button>
-            <div class="border">Login</div>
+            <v-btn>Button</v-btn>
           </button>
           <!-- other way to login -->
           <div class="flex items-center gap-5">
